@@ -2,20 +2,19 @@
 #include <stdio.h>
 
 void countingSort(int array[], int size) {
-  int output[10];
-
-  // Find the largest element of the array
+  
+  // Знаходимо найбільший елемент масиву
   int max = array[0];
   for (int i = 1; i < size; i++) {
     if (array[i] > max)
       max = array[i];
   }
 
-  // The size of count must be at least (max+1) but
-  // we cannot declare it as int count(max+1) in C as
-  // it does not support dynamic memory allocation.
-  // So, its size is provided statically.
-  int count[10];
+  // Створюємо вихідний масив такого розміру, як і вхідний.
+  int output[size];
+
+  // Створюємо масив лічильника розміром (max+1)
+  int count[max+1];
 
   // Initialize count array with all zeros.
   for (int i = 0; i <= max; ++i) {
@@ -45,18 +44,47 @@ void countingSort(int array[], int size) {
   }
 }
 
-// Function to print an array
-void printArray(int array[], int size) {
+// Function to print an output array
+void printOutput(int array[], int size) {  
   for (int i = 0; i < size; ++i) {
-    printf("%d  ", array[i]);
+    printf("%d  ", array[i]);    
   }
   printf("\n");
 }
 
+// Input array size cheker
+int sizeCheck() {
+  int size;
+  scanf("%d", &size);
+  if (size < 2) {
+    printf("The number is too small, plase type a number from 2 to 9:\n");
+    sizeCheck();
+  } else if (size > 9) {
+    printf("The number is too big, plase type a number from 2 to 9:\n");
+    sizeCheck();
+  }
+  return size;  
+}
+
 // Driver code
-int main() {
-  int array[] = {4, 2, 2, 8, 3, 3, 1};
-  int n = sizeof(array) / sizeof(array[0]);
-  countingSort(array, n);
-  printArray(array, n);
+int main(void) {
+  int size;
+ 
+  printf("333Enter the size of an array forom 2 to 9: \n");
+  size = sizeCheck();
+  printf("The size or your input array is %d.\n", size);
+
+  // Creating input array
+  int array[size];
+
+  for (int i = 0; i < size; i++) {
+    printf("Enter key %d of %d value: ", i + 1, size);
+    scanf("%d", &array[i]);    
+  }
+
+  countingSort(array, size);
+  printOutput(array, size); 
+
+  system("pause"); //prevent console from closing automatically 
+
 }
