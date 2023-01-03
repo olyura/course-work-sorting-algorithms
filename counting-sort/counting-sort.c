@@ -17,7 +17,7 @@ void countingSort(int array[], int size) {
   // Ініціалізація масиву з лічильниками розміром (max+1)
   int count[max+1];
 
-  // Заповнення масиву з лічильниками значенями 0
+  // Заповнення масиву з лічильниками значеннями 0
   for (int i = 0; i <= max; i++) {
     count[i] = 0;
   }
@@ -59,10 +59,10 @@ int sizeCheck() {
   int size;
   scanf("%d", &size);  
   if (size < 2) {
-    printf("The number is too small, plase type a number from 2 to 10:\n");
+    printf("The number is too small, type a number from 2 to 10:\n");
     sizeCheck();
   } else if (size > 9) {
-    printf("The number is too big, plase type a number from 2 to 10:\n");
+    printf("The number is too big, type a number from 2 to 10:\n");
     sizeCheck();
   } else {
     return size;  
@@ -75,7 +75,7 @@ int main(void) {
   // Ініціалізація та перевірка розміру вхідного масиву
   int size;
   
-  printf("Enter the size of an array forom 2 to 10: \n");
+  printf("Enter the size of an array from 2 to 10: \n");
   size = sizeCheck();
   printf("The size or your input array is %d.\n", size);
   printf("Enter the value of each key. Value must be a non-negative integer.\n");
