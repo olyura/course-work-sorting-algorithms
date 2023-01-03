@@ -1,80 +1,86 @@
-// Сортування підрахунком
+// Сортування підрахунком мовою C
 #include <stdio.h>
 
+// Алгоритм сортування підрахунком
 void countingSort(int array[], int size) {
+
+  // Ініціалізація вихідного масив такого розміру, як і вхідний.
+  int output[size];
   
-  // Знаходимо найбільший елемент масиву
+  // Пошук найбільшого елемента масиву
   int max = array[0];
   for (int i = 1; i < size; i++) {
     if (array[i] > max)
       max = array[i];
   }
 
-  // Створюємо вихідний масив такого розміру, як і вхідний.
-  int output[size];
-
-  // Створюємо масив лічильника розміром (max+1)
+  // Ініціалізація масиву з лічильниками розміром (max+1)
   int count[max+1];
 
-  // Initialize count array with all zeros.
-  for (int i = 0; i <= max; ++i) {
+  // Заповнення масиву з лічильниками значенями 0
+  for (int i = 0; i <= max; i++) {
     count[i] = 0;
   }
 
-  // Store the count of each element
+  // Підрахунок кожного елемента вхідного масиву у відповідному індексі масиву лічильників
   for (int i = 0; i < size; i++) {
     count[array[i]]++;
   }
 
-  // Store the cummulative count of each array
+  // Кумулятивна сума всіх попередніх значень в масиві лічильників
   for (int i = 1; i <= max; i++) {
     count[i] += count[i - 1];
   }
 
-  // Find the index of each element of the original array in count array, and
-  // place the elements in output array
+  // Пошук індекса кожного елемента вхідного масива в масиві лічильників
+  // Розміщення елементів в вихідний масив, декремент лічильника
   for (int i = size - 1; i >= 0; i--) {
     output[count[array[i]] - 1] = array[i];
     count[array[i]]--;
   }
 
-  // Copy the sorted elements into original array
+  // Перенос відсортованих значень у вхідний масив
   for (int i = 0; i < size; i++) {
     array[i] = output[i];
   }
 }
 
-// Function to print an output array
-void printOutput(int array[], int size) {  
+// Вивід відсортованих даних
+void printOutput(int array[], int size) {
+  printf("Sorted data:\n");  
   for (int i = 0; i < size; ++i) {
     printf("%d  ", array[i]);    
   }
   printf("\n");
 }
 
-// Input array size cheker
+// Перевірка розміру вхідного масиву
 int sizeCheck() {
   int size;
-  scanf("%d", &size);
+  scanf("%d", &size);  
   if (size < 2) {
-    printf("The number is too small, plase type a number from 2 to 9:\n");
+    printf("The number is too small, plase type a number from 2 to 10:\n");
     sizeCheck();
   } else if (size > 9) {
-    printf("The number is too big, plase type a number from 2 to 9:\n");
+    printf("The number is too big, plase type a number from 2 to 10:\n");
     sizeCheck();
+  } else {
+    return size;  
   }
-  return size;  
 }
 
-// Driver code
+// Головна функція
 int main(void) {
+
+  // Ініціалізація та перевірка розміру вхідного масиву
   int size;
- 
-  printf("333Enter the size of an array forom 2 to 9: \n");
+  
+  printf("Enter the size of an array forom 2 to 10: \n");
   size = sizeCheck();
   printf("The size or your input array is %d.\n", size);
+  printf("Enter the value of each key. Value must be a non-negative integer.\n");
 
-  // Creating input array
+  // Ініціалізація та заповнення вхідного масиву
   int array[size];
 
   for (int i = 0; i < size; i++) {
@@ -85,6 +91,6 @@ int main(void) {
   countingSort(array, size);
   printOutput(array, size); 
 
-  system("pause"); //prevent console from closing automatically 
-
+  // Запобігання передчасному закриттю консолі
+  system("pause"); 
 }
