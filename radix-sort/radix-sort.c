@@ -1,16 +1,25 @@
-// Сортування підрахунком мовою C
+// Порозрядне сортування мовою C
 #include <stdio.h>
 
-// Алгоритм сортування підрахунком
-void countingSort(int array[], int size) {
-
-  // Ініціалізація вихідного масиву
-  int output[size];
-  
-  // Пошук найбільшого елемента масиву
+// Функція пошуку найбільшого значення в масиві
+int getMax(int array[], int n) {
   int max = array[0];
-  for (int i = 1; i < size; i++) {
+  for (int i = 1; i < n; i++)
     if (array[i] > max)
+      max = array[i];
+  return max;
+}
+
+// Алгоритм сортування підрахунком для кожного окремого розряду
+void countingSort(int array[], int size, int place) {
+  
+  // Ініціалізація вихідного масиву (розмір + 1)
+  int output[size + 1];
+
+  // Пошук найбільшого елемента масиву
+  int max = (array[0] / place) % 10;
+  for (int i = 1; i < size; i++) {
+    if (((array[i] / place) % 10) > max)
       max = array[i];
   }
 
@@ -18,31 +27,41 @@ void countingSort(int array[], int size) {
   int count[max + 1];
 
   // Заповнення масиву з лічильниками значеннями 0
-  for (int i = 0; i <= max; i++) {
+  //for (int i = 0; i <= max; i++) {
+  for (int i = 0; i < max; ++i) {
     count[i] = 0;
   }
 
   // Підрахунок кожного елемента вхідного масиву у відповідному індексі масиву лічильників
-  for (int i = 0; i < size; i++) {
-    count[array[i]]++;
-  }
+  for (int i = 0; i < size; i++)
+    count[(array[i] / place) % 10]++;
 
   // Кумулятивна сума всіх попередніх значень в масиві лічильників
-  for (int i = 1; i <= max; i++) {
+  for (int i = 1; i < 10; i++) {
     count[i] += count[i - 1];
   }
 
-  // Пошук індекса кожного елемента вхідного масива в масиві лічильників
+   // Пошук індекса кожного елемента вхідного масива в масиві лічильників
   // Розміщення елементів в вихідний масив, декремент лічильника
   for (int i = size - 1; i >= 0; i--) {
-    output[count[array[i]] - 1] = array[i];
-    count[array[i]]--;
+    output[count[(array[i] / place) % 10] - 1] = array[i];
+    count[(array[i] / place) % 10]--;
   }
-
+  
   // Перенос відсортованих значень у вхідний масив
   for (int i = 0; i < size; i++) {
     array[i] = output[i];
   }
+}
+
+// Алгоритм порозрядного сортування
+void radixSort(int array[], int size) {
+  // Пошук найбільшого елементу
+  int max = getMax(array, size);
+  
+  // Застосування сортування підрахунком для впорядкування за кожним розрядом
+  for (int place = 1; max / place > 0; place *= 10)
+    countingSort(array, size, place);
 }
 
 // Вивід відсортованих даних
@@ -88,7 +107,7 @@ int main(void) {
     scanf("%d", &array[i]);    
   }
 
-  countingSort(array, size);
+  radixSort(array, size);
   printOutput(array, size); 
 
   // Запобігання передчасному закриттю консолі
