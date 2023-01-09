@@ -1,38 +1,36 @@
-// Bucket sort in C
-
+// Блочне сортування мовою C
 #include <stdio.h>
 #include <stdlib.h>
 
-#define NARRAY 7   // Array size
-#define NBUCKET 6  // Number of buckets
-#define INTERVAL 10  // Each bucket capacity
+#define NBUCKET 10  // Кількість комірок
+#define INTERVAL 10  // Ємність кожної комірки
 
 struct Node {
   int data;
   struct Node *next;
 };
 
-void BucketSort(int arr[]);
-struct Node *InsertionSort(struct Node *list);
-void print(int arr[]);
+void bucketSort(int arr[], int size);
+struct Node *insertionSort(struct Node *list);
+void printOutput(int arr[], int size);
 void printBuckets(struct Node *list);
 int getBucketIndex(int value);
 
-// Sorting function
-void BucketSort(int arr[]) {
+// Алгоритм блочного сортування
+void bucketSort(int arr[], int size) {
   int i, j;
   struct Node **buckets;
 
-  // Create buckets and allocate memory size
+  // Створення комірок та розподілення пам'яті
   buckets = (struct Node **)malloc(sizeof(struct Node *) * NBUCKET);
 
-  // Initialize empty buckets
+  // Ініціалізація порожніх комірок
   for (i = 0; i < NBUCKET; ++i) {
     buckets[i] = NULL;
   }
 
-  // Fill the buckets with respective elements
-  for (i = 0; i < NARRAY; ++i) {
+  // Наповнення комірок відповідними елементами
+  for (i = 0; i < size; ++i) {
     struct Node *current;
     int pos = getBucketIndex(arr[i]);
     current = (struct Node *)malloc(sizeof(struct Node));
@@ -41,27 +39,28 @@ void BucketSort(int arr[]) {
     buckets[pos] = current;
   }
 
-  // Print the buckets along with their elements
+  // Демонстрація комірок та їх вмісту, не обов'язково
   for (i = 0; i < NBUCKET; i++) {
     printf("Bucket[%d]: ", i);
     printBuckets(buckets[i]);
     printf("\n");
   }
 
-  // Sort the elements of each bucket
+  // Сортування елементів кожної комірки методом включення
   for (i = 0; i < NBUCKET; ++i) {
-    buckets[i] = InsertionSort(buckets[i]);
+    buckets[i] = insertionSort(buckets[i]);
   }
 
+  // Демонстрація вмісту комірок після сортування, не обов'язково
   printf("-------------\n");
-  printf("Bucktets after sorting\n");
+  printf("Buckets after sorting\n");
   for (i = 0; i < NBUCKET; i++) {
     printf("Bucket[%d]: ", i);
     printBuckets(buckets[i]);
     printf("\n");
   }
 
-  // Put sorted elements on arr
+  // Перенос відсортованих елементів в основний масив
   for (j = 0, i = 0; i < NBUCKET; ++i) {
     struct Node *node;
     node = buckets[i];
@@ -74,8 +73,8 @@ void BucketSort(int arr[]) {
   return;
 }
 
-// Function to sort the elements of each bucket
-struct Node *InsertionSort(struct Node *list) {
+// Алгоритм сортування включенням
+struct Node *insertionSort(struct Node *list) {
   struct Node *k, *nodeList;
   if (list == 0 || list->next == 0) {
     return list;
@@ -117,19 +116,21 @@ struct Node *InsertionSort(struct Node *list) {
   return nodeList;
 }
 
+// Визначення індексу комірки
 int getBucketIndex(int value) {
   return value / INTERVAL;
 }
 
-void print(int ar[]) {
+// Вивід відсортованих даних
+void printOutput(int ar[], int size) {
   int i;
-  for (i = 0; i < NARRAY; ++i) {
+  for (i = 0; i < size; ++i) {
     printf("%d ", ar[i]);
   }
   printf("\n");
 }
 
-// Print buckets
+// Перебор вмісту комірки
 void printBuckets(struct Node *list) {
   struct Node *cur = list;
   while (cur) {
@@ -138,17 +139,45 @@ void printBuckets(struct Node *list) {
   }
 }
 
-// Driver code
+// Перевірка розміру вхідного масиву
+int sizeCheck() {
+  int size;
+  scanf("%d", &size);  
+  if (size < 2) {
+    printf("The number is too small, type a number from 2 to 10:\n");
+    sizeCheck();
+  } else if (size > 10) {
+    printf("The number is too big, type a number from 2 to 10:\n");
+    sizeCheck();
+  } else {
+    return size;  
+  }
+}
+
+// Головна функція
 int main(void) {
-  int array[NARRAY] = {42, 32, 33, 52, 37, 47, 51};
 
-  printf("Initial array: ");
-  print(array);
-  printf("-------------\n");
+  // Ініціалізація та перевірка розміру вхідного масиву
+  int size;
 
-  BucketSort(array);
+  printf("Enter the size of an array from 2 to 10: \n");
+  size = sizeCheck();
+  printf("The size or your input array is %d.\n", size);
+  printf("Enter the value of each key. Value must be a non-negative integer smaller than 100.\n");
+
+  // Ініціалізація та заповнення вхідного масиву
+  int array[size];
+
+  for (int i = 0; i < size; i++) {
+    printf("Enter key %d of %d value: ", i + 1, size);
+    scanf("%d", &array[i]);    
+  }
+
+  bucketSort(array, size);
   printf("-------------\n");
   printf("Sorted array: ");
-  print(array);
-  return 0;
+  printOutput(array, size);
+
+  // Запобігання передчасному закриттю консолі
+  system("pause"); 
 }

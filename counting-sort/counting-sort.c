@@ -61,7 +61,7 @@ int sizeCheck() {
   if (size < 2) {
     printf("The number is too small, type a number from 2 to 10:\n");
     sizeCheck();
-  } else if (size > 9) {
+  } else if (size > 10) {
     printf("The number is too big, type a number from 2 to 10:\n");
     sizeCheck();
   } else {
