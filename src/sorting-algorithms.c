@@ -71,8 +71,55 @@ int sizeCheck() {
   }
 }
 
+// Головне меню програми
+void mainMenu(int level, int algorithm) {
+  int choice;
+
+  // Головний рівень
+  if (level==0) {
+    printf("Hello and welcome to simple algorithm sorting programm. Choose your algorithm by entering it's number \n");
+    printf("1. Counting sort \n");
+    printf("2. Radix sort\n");
+    printf("3. Buchet sort\n");
+    printf("4. Help\n");
+    printf("5. Exit\n\n\n");
+    printf("Enter your choice :  ");
+    scanf("%d",&choice);
+    switch(choice) {
+      case 1:
+        
+        break;
+      case 5:
+        printf("See You!");
+        exit(0);
+      default:
+        printf("Command undefined\n");
+        printf("Press Any Key to Continue\n");
+        getch();
+        printf("\n");
+        mainMenu(0,0);
+    }
+  }
+
+  // Меню алгоритму підрахунком
+  if ((level==1)&&(algorithm==1)) {
+
+  }
+
+  
+  
+  
+}
+
+
 // Головна функція
 int main(void) {
+
+  // Меню
+  mainMenu(0,0);
+
+
+  // -------------------------------------------------------
 
   // Ініціалізація та перевірка розміру вхідного масиву
   int size;
