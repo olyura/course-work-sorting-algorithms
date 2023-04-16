@@ -11,7 +11,7 @@ int getMax(int array[], int n) {
 }
 
 // Алгоритм сортування підрахунком для кожного окремого розряду
-void countingSort(int array[], int size, int place) {
+void countingForRasixSort(int array[], int size, int place) {
   
   // Ініціалізація вихідного масиву (розмір + 1)
   int output[size + 1];
@@ -61,7 +61,7 @@ void radixSort(int array[], int size) {
   
   // Застосування сортування підрахунком для впорядкування за кожним розрядом
   for (int place = 1; max / place > 0; place *= 10)
-    countingSort(array, size, place);
+    countingForRasixSort(array, size, place);
 }
 
 // Вивід відсортованих даних

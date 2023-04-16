@@ -77,17 +77,19 @@ void mainMenu(int level, int algorithm) {
 
   // Головний рівень
   if (level==0) {
-    printf("Hello and welcome to simple algorithm sorting programm. Choose your algorithm by entering it's number \n");
+    printf("--- MAIN MENU ---\n");
+    printf("Hello and welcome to a simple algorithm sorting programm. Choose your algorithm by entering it's number: \n");
     printf("1. Counting sort \n");
     printf("2. Radix sort\n");
     printf("3. Buchet sort\n");
     printf("4. Help\n");
-    printf("5. Exit\n\n\n");
-    printf("Enter your choice :  ");
+    printf("5. Exit\n\n");
+    printf("Enter your choice: ");
     scanf("%d",&choice);
+    printf("\n\n");
     switch(choice) {
       case 1:
-        
+        mainMenu(1,1);
         break;
       case 5:
         printf("See You!");
@@ -103,13 +105,58 @@ void mainMenu(int level, int algorithm) {
 
   // Меню алгоритму підрахунком
   if ((level==1)&&(algorithm==1)) {
-
+    printf("--- MAIN MENU / COUNTING SORT --- \n");
+    printf("Enter the mode of an algorithm: \n");
+    printf("1. Enter your array \n");
+    printf("2. Random demo array \n");
+    printf("0. Main menu \n\n");
+    printf("Enter your choice: ");
+    scanf("%d",&choice);
+    printf("\n\n");
+    switch(choice) {
+      case 1:
+        countingSortMenu();
+        break;
+      case 2:
+        countingSortMenu();
+        break;
+      case 0:
+        mainMenu(0,0);
+        break;
+      default:
+        printf("Command undefined\n");
+        printf("Press Any Key to Continue\n");
+        getch();
+        printf("\n");
+        mainMenu(1,1);
+    }
   }
-
   
   
   
 }
+
+// Запуск сортування підрахунком
+int countingSortMenu() {
+  int size;
+  
+  printf("Enter the size of an array from 2 to 10: \n");
+  size = sizeCheck();
+  printf("The size or your input array is %d.\n", size);
+  printf("Enter the value of each key. Value must be a non-negative integer.\n");
+
+  // Ініціалізація та заповнення вхідного масиву
+  int array[size];
+
+  for (int i = 0; i < size; i++) {
+    printf("Enter key %d of %d value: ", i + 1, size);
+    scanf("%d", &array[i]);    
+  }
+
+  countingSort(array, size);
+  printOutput(array, size); 
+}
+
 
 
 // Головна функція
@@ -121,6 +168,7 @@ int main(void) {
 
   // -------------------------------------------------------
 
+/* 
   // Ініціалізація та перевірка розміру вхідного масиву
   int size;
   
@@ -139,6 +187,7 @@ int main(void) {
 
   countingSort(array, size);
   printOutput(array, size); 
+ */
 
   // Запобігання передчасному закриттю консолі
   system("pause"); 
