@@ -1,5 +1,6 @@
 // Алгоритми сортування мовою C
 #include <stdio.h>
+#include <ctype.h> //isdigit()
 
 // -------------------------------------------------------
 
@@ -58,8 +59,20 @@ void printOutput(int array[], int size) {
 
 // Перевірка розміру вхідного масиву
 int sizeCheck() {
+
   int size;
-  scanf("%d", &size);  
+
+  scanf("%d", &size);
+  //sizeInt = (int)(sizeChar);
+
+  //printf("Result when numeric character %c is passed: %d \n\n\n", sizeChar, isdigit(sizeChar));
+  /* while (getchar() != '\n') {
+    printf("Please, enter a number:\n");
+    sizeCheck();
+  } */
+
+
+
   if (size < 2) {
     printf("The number is too small, type a number from 2 to 10:\n");
     sizeCheck();
@@ -69,6 +82,9 @@ int sizeCheck() {
   } else {
     return size;  
   }
+
+
+
 }
 
 // Головне меню програми
@@ -98,7 +114,7 @@ void mainMenu(int level, int algorithm) {
         printf("Command undefined\n");
         printf("Press Any Key to Continue\n");
         getch();
-        printf("\n");
+        printf("\n\n");
         mainMenu(0,0);
     }
   }
