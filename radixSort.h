@@ -1,8 +1,15 @@
-// Порозрядне сортування мовою C
-#include <stdio.h>
+#ifndef RADIXSORT_H
+#define RADIXSORT_H
+
+#include <iostream>
+#include <vector>
+
+#include "data.h"
+
+using namespace std;
 
 // Функція пошуку найбільшого значення в масиві
-int getMax(int array[], int n) {
+int getMaxRadix(int array[], int n) {
   int max = array[0];
   for (int i = 1; i < n; i++)
     if (array[i] > max)
@@ -55,61 +62,84 @@ void countingForRasixSort(int array[], int size, int place) {
 }
 
 // Алгоритм порозрядного сортування
-void radixSort(int array[], int size) {
+void radixSort(int array[], int size) { 
   // Пошук найбільшого елементу
-  int max = getMax(array, size);
+  int max = getMaxRadix(array, size);
   
   // Застосування сортування підрахунком для впорядкування за кожним розрядом
   for (int place = 1; max / place > 0; place *= 10)
     countingForRasixSort(array, size, place);
 }
 
-// Вивід відсортованих даних
-void printOutput(int array[], int size) {
-  printf("Sorted data:\n");  
-  for (int i = 0; i < size; ++i) {
-    printf("%d  ", array[i]);    
+// Запуск функції сортування підрахунком
+void runRadixSort(int demo = 0) {
+
+  string rawArray;
+
+  switch(demo) {
+    case 1:
+      cout << "Radix Sort - demo 1000 ASC" << endl;
+      rawArray = radix1000asc();
+      break;
+    case 2:
+      cout << "Radix Sort - demo 1000 DESC" << endl;
+      rawArray = radix1000desc();
+      break;
+    case 3:
+      cout << "Radix Sort - demo 1000 random" << endl;
+      rawArray = randomArray(1000, 1000);
+      break;
+    case 4:
+      cout << "Radix Sort - demo 10000 ASC" << endl;
+      rawArray = radix10000asc();
+      break;
+    case 5:
+      cout << "Radix Sort - demo 10000 DESC" << endl;
+      rawArray = radix10000desc();
+      break;
+    case 6:
+      cout << "Radix Sort - demo 10000 random" << endl;
+      rawArray = randomArray(10000, 1000);
+      break;
+    case 7:
+      cout << "Radix Sort - demo 100000 ASC" << endl;
+      rawArray = radix100000asc();
+      break;
+    case 8:
+      cout << "Radix Sort - demo 100000 DESC" << endl;
+      rawArray = radix100000desc();
+      break;
+    case 9:
+      cout << "Radix Sort - demo 100000 random" << endl;
+      rawArray = randomArray(100000, 1000);
+      break;
+    default:
+      rawArray = handArray();
   }
-  printf("\n");
-}
 
-// Перевірка розміру вхідного масиву
-int sizeCheck() {
-  int size;
-  scanf("%d", &size);  
-  if (size < 2) {
-    printf("The number is too small, type a number from 2 to 10:\n");
-    sizeCheck();
-  } else if (size > 10) {
-    printf("The number is too big, type a number from 2 to 10:\n");
-    sizeCheck();
-  } else {
-    return size;  
-  }
-}
-
-// Головна функція
-int main(void) {
-
-  // Ініціалізація та перевірка розміру вхідного масиву
-  int size;
+  //cout << rawArray << endl;
   
-  printf("Enter the size of an array from 2 to 10: \n");
-  size = sizeCheck();
-  printf("The size or your input array is %d.\n", size);
-  printf("Enter the value of each key. Value must be a non-negative integer.\n");
-
-  // Ініціалізація та заповнення вхідного масиву
-  int array[size];
-
-  for (int i = 0; i < size; i++) {
-    printf("Enter key %d of %d value: ", i + 1, size);
-    scanf("%d", &array[i]);    
+  vector<int> futurArray = arrayFromInputInt(rawArray);
+  int arr[futurArray.size()];
+  for (int i=0; i < futurArray.size(); i++) { 
+    arr[i] = futurArray[i];
   }
+  int n = sizeof(arr) / sizeof(arr[0]);
 
-  radixSort(array, size);
-  printOutput(array, size); 
+  cout << "Radix Sort start" << endl;
+  radixSort(arr, n);
+  outputFile(arr, n);
 
-  // Запобігання передчасному закриттю консолі
-  system("pause"); 
+  return;
+
+  //reverse
+  /* int revArr[n];
+  for (int i = 0; i < n; i++) {
+    revArr[i] = arr[n - 1 - i];
+  }
+  outputFile(revArr, n); */
+  //
+
 }
+
+#endif

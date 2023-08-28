@@ -4,12 +4,12 @@
 #include <iostream>
 #include <vector>
 
+#include "data.h"
+
 using namespace std;
 
 // Сортування підрахунком
 void countingSort(int array[], int size) {
-
-  cout << "Counting Sort start" << endl;
 
   // Ініціалізація вихідного масиву
   int output[size];
@@ -105,8 +105,11 @@ void runCountingSort(int demo = 0) {
   }
   int n = sizeof(arr) / sizeof(arr[0]);
 
+  cout << "Counting Sort start" << endl;
   countingSort(arr, n);
   outputFile(arr, n);
+
+  return;
 
   //reverse
   /* int revArr[n];

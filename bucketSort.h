@@ -1,6 +1,13 @@
-// Блочне сортування мовою C
-#include <stdio.h>
-#include <stdlib.h>
+#ifndef BUCKETSORT_H
+#define BUCKETSORT_H
+
+#include <iostream>
+#include <iomanip>
+#include <vector>
+
+#include "data.h"
+
+using namespace std;
 
 #define NBUCKET 10  // Кількість комірок
 #define INTERVAL 10  // Ємність кожної комірки
@@ -12,8 +19,8 @@ struct Node {
 
 void bucketSort(int arr[], int size);
 struct Node *insertionSort(struct Node *list);
-void printOutput(int arr[], int size);
-void printBuckets(struct Node *list);
+/* void printOutput(int arr[], int size); */
+/* void printBuckets(struct Node *list); */
 int getBucketIndex(int value);
 
 // Алгоритм блочного сортування
@@ -40,11 +47,11 @@ void bucketSort(int arr[], int size) {
   }
 
   // Демонстрація комірок та їх вмісту, не обов'язково
-  for (i = 0; i < NBUCKET; i++) {
-    printf("Bucket[%d]: ", i);
+  /* for (i = 0; i < NBUCKET; i++) {
+    cout << "Bucket[" << i << "] : ";
     printBuckets(buckets[i]);
-    printf("\n");
-  }
+    cout << endl;
+  } */
 
   // Сортування елементів кожної комірки методом включення
   for (i = 0; i < NBUCKET; ++i) {
@@ -52,13 +59,13 @@ void bucketSort(int arr[], int size) {
   }
 
   // Демонстрація вмісту комірок після сортування, не обов'язково
-  printf("-------------\n");
-  printf("Buckets after sorting\n");
+  /* cout << "-------------" << endl;
+  cout << "Buckets after sorting" << endl;
   for (i = 0; i < NBUCKET; i++) {
-    printf("Bucket[%d]: ", i);
+    cout << "Bucket[" << i << "] : ";
     printBuckets(buckets[i]);
-    printf("\n");
-  }
+    cout << endl;
+  } */
 
   // Перенос відсортованих елементів в основний масив
   for (j = 0, i = 0; i < NBUCKET; ++i) {
@@ -70,6 +77,17 @@ void bucketSort(int arr[], int size) {
     }
   }
 
+  for (i = 0; i < NBUCKET; ++i) {
+    struct Node *node;
+    node = buckets[i];
+    while (node) {
+      struct Node *tmp;
+      tmp = node;
+      node = node->next;
+      free(tmp);
+    }
+  }
+  free(buckets);
   return;
 }
 
@@ -122,62 +140,90 @@ int getBucketIndex(int value) {
 }
 
 // Вивід відсортованих даних
-void printOutput(int ar[], int size) {
+/* void printOutput(int ar[], int size) {
   int i;
   for (i = 0; i < size; ++i) {
     printf("%d ", ar[i]);
   }
-  printf("\n");
-}
+  cout << endl;
+} */
 
 // Перебор вмісту комірки
-void printBuckets(struct Node *list) {
+/* void printBuckets(struct Node *list) {
   struct Node *cur = list;
   while (cur) {
-    printf("%d ", cur->data);
+    cout << setw(3) << cur->data;
     cur = cur->next;
   }
-}
+} */
 
-// Перевірка розміру вхідного масиву
-int sizeCheck() {
-  int size;
-  scanf("%d", &size);  
-  if (size < 2) {
-    printf("The number is too small, type a number from 2 to 10:\n");
-    sizeCheck();
-  } else if (size > 10) {
-    printf("The number is too big, type a number from 2 to 10:\n");
-    sizeCheck();
-  } else {
-    return size;  
+// Запуск функції сортування підрахунком
+void runBucketSort(int demo = 0) {
+
+  string rawArray;
+
+  switch(demo) {
+    case 1:
+      cout << "Bucket Sort - demo 1000 ASC" << endl;
+      rawArray = bucket1000asc();
+      break;
+    case 2:
+      cout << "Bucket Sort - demo 1000 DESC" << endl;
+      rawArray = bucket1000desc();
+      break;
+    case 3:
+      cout << "Bucket Sort - demo 1000 random" << endl;
+      rawArray = randomArray(1000, 100);
+      break;
+    case 4:
+      cout << "Bucket Sort - demo 10000 ASC" << endl;
+      rawArray = bucket10000asc();
+      break;
+    case 5:
+      cout << "Bucket Sort - demo 10000 DESC" << endl;
+      rawArray = bucket10000desc();
+      break;
+    case 6:
+      cout << "Bucket Sort - demo 10000 random" << endl;
+      rawArray = randomArray(10000, 100);
+      break;
+    case 7:
+      cout << "Bucket Sort - demo 100000 ASC" << endl;
+      rawArray = bucket100000asc();
+      break;
+    case 8:
+      cout << "Bucket Sort - demo 100000 DESC" << endl;
+      rawArray = bucket100000desc();
+      break;
+    case 9:
+      cout << "Bucket Sort - demo 100000 random" << endl;
+      rawArray = randomArray(100000, 100);
+      break;
+    default:
+      rawArray = handArray();
   }
-}
 
-// Головна функція
-int main(void) {
-
-  // Ініціалізація та перевірка розміру вхідного масиву
-  int size;
-
-  printf("Enter the size of an array from 2 to 10: \n");
-  size = sizeCheck();
-  printf("The size or your input array is %d.\n", size);
-  printf("Enter the value of each key. Value must be a non-negative integer smaller than 100.\n");
-
-  // Ініціалізація та заповнення вхідного масиву
-  int array[size];
-
-  for (int i = 0; i < size; i++) {
-    printf("Enter key %d of %d value: ", i + 1, size);
-    scanf("%d", &array[i]);    
+  vector<int> futurArray = arrayFromInputInt(rawArray);
+  int arr[futurArray.size()];
+  for (int i=0; i < futurArray.size(); i++) { 
+    arr[i] = futurArray[i];
   }
+  int n = sizeof(arr) / sizeof(arr[0]);
 
-  bucketSort(array, size);
-  printf("-------------\n");
-  printf("Sorted array: ");
-  printOutput(array, size);
+  cout << "Bucket Sort start" << endl;
+  bucketSort(arr, n);
+  outputFile(arr, n);
 
-  // Запобігання передчасному закриттю консолі
-  system("pause"); 
+  return;
+
+  //reverse
+  /* int revArr[n];
+  for (int i = 0; i < n; i++) {
+    revArr[i] = arr[n - 1 - i];
+  }
+  outputFile(revArr, n) */;
+  //
+
 }
+
+#endif
