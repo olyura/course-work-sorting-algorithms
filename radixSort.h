@@ -8,6 +8,10 @@
 
 using namespace std;
 
+// Допоміжні глобальні змінни для фіксації кількості порівнянь та обмініві
+int radix_compare = 0;
+int radix_exchange = 0;
+
 // Функція пошуку найбільшого значення в масиві
 int getMaxRadix(int array[], int n) {
   int max = array[0];
@@ -34,14 +38,15 @@ void countingForRasixSort(int array[], int size, int place) {
   int count[max + 1];
 
   // Заповнення масиву з лічильниками значеннями 0
-  //for (int i = 0; i <= max; i++) {
   for (int i = 0; i < max; ++i) {
     count[i] = 0;
   }
 
   // Підрахунок кожного елемента вхідного масиву у відповідному індексі масиву лічильників
-  for (int i = 0; i < size; i++)
+  for (int i = 0; i < size; i++) {
     count[(array[i] / place) % 10]++;
+    radix_exchange++;
+  }
 
   // Кумулятивна сума всіх попередніх значень в масиві лічильників
   for (int i = 1; i < 10; i++) {
@@ -53,6 +58,7 @@ void countingForRasixSort(int array[], int size, int place) {
   for (int i = size - 1; i >= 0; i--) {
     output[count[(array[i] / place) % 10] - 1] = array[i];
     count[(array[i] / place) % 10]--;
+    radix_compare++;
   }
   
   // Перенос відсортованих значень у вхідний масив
@@ -129,6 +135,11 @@ void runRadixSort(int demo = 0) {
   cout << "Radix Sort start" << endl;
   radixSort(arr, n);
   outputFile(arr, n);
+
+  cout << "Compares = " << radix_compare << endl;
+  cout << "Exchanges = " << radix_exchange << endl;
+  radix_compare = 0;
+  radix_exchange = 0;
 
   return;
 

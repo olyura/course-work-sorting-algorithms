@@ -9,6 +9,10 @@
 
 using namespace std;
 
+// Допоміжні глобальні змінни для фіксації кількості порівнянь та обмініві
+int bucket_compare = 0;
+int bucket_exchange = 0;
+
 #define NBUCKET 10  // Кількість комірок
 #define INTERVAL 10  // Ємність кожної комірки
 
@@ -44,6 +48,7 @@ void bucketSort(int arr[], int size) {
     current->data = arr[i];
     current->next = buckets[pos];
     buckets[pos] = current;
+    bucket_exchange++;
   }
 
   // Демонстрація комірок та їх вмісту, не обов'язково
@@ -112,9 +117,13 @@ struct Node *insertionSort(struct Node *list) {
       continue;
     }
 
+    bucket_exchange++;
+
     for (ptr = nodeList; ptr->next != 0; ptr = ptr->next) {
-      if (ptr->next->data > k->data)
+      bucket_compare++;
+      if (ptr->next->data > k->data) {
         break;
+      }
     }
 
     if (ptr->next != 0) {
@@ -213,6 +222,11 @@ void runBucketSort(int demo = 0) {
   cout << "Bucket Sort start" << endl;
   bucketSort(arr, n);
   outputFile(arr, n);
+
+  cout << "Compares = " << bucket_compare << endl;
+  cout << "Exchanges = " << bucket_exchange << endl;
+  bucket_compare = 0;
+  bucket_exchange = 0;
 
   return;
 

@@ -8,6 +8,10 @@
 
 using namespace std;
 
+// Допоміжні глобальні змінни для фіксації кількості порівнянь та обмініві
+int counting_compare = 0;
+int counting_exchange = 0;
+
 // Сортування підрахунком
 void countingSort(int array[], int size) {
 
@@ -19,6 +23,7 @@ void countingSort(int array[], int size) {
   for (int i = 1; i < size; i++) {
     if (array[i] > max)
       max = array[i];
+      //counting_compare++;
   }
 
   // Ініціалізація масиву з лічильниками розміром (max+1)
@@ -32,6 +37,7 @@ void countingSort(int array[], int size) {
   // Підрахунок кожного елемента вхідного масиву у відповідному індексі масиву лічильників
   for (int i = 0; i < size; i++) {
     count[array[i]]++;
+    counting_exchange++;
   }
 
   // Кумулятивна сума всіх попередніх значень в масиві лічильників
@@ -44,6 +50,7 @@ void countingSort(int array[], int size) {
   for (int i = size - 1; i >= 0; i--) {
     output[count[array[i]] - 1] = array[i];
     count[array[i]]--;
+    counting_compare++;
   }
 
   // Перенос відсортованих значень у вхідний масив
@@ -108,6 +115,11 @@ void runCountingSort(int demo = 0) {
   cout << "Counting Sort start" << endl;
   countingSort(arr, n);
   outputFile(arr, n);
+
+  cout << "Compares = " << counting_compare << endl;
+  cout << "Exchanges = " << counting_exchange << endl;
+  counting_compare = 0;
+  counting_exchange = 0;
 
   return;
 
