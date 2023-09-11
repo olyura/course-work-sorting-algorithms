@@ -67,11 +67,11 @@ void runCountingSort(int demo = 0) {
   switch(demo) {
     case 1:
       cout << "Counting Sort - demo 1000 ASC" << endl;
-      rawArray = counting1000asc();
+      rawArray = arrayFromFile("testArrays/counting1000asc.txt");
       break;
     case 2:
       cout << "Counting Sort - demo 1000 DESC" << endl;
-      rawArray = counting1000desc();
+      rawArray = arrayFromFile("testArrays/counting1000desc.txt");
       break;
     case 3:
       cout << "Counting Sort - demo 1000 random" << endl;
@@ -79,11 +79,11 @@ void runCountingSort(int demo = 0) {
       break;
     case 4:
       cout << "Counting Sort - demo 10000 ASC" << endl;
-      rawArray = counting10000asc();
+      rawArray = arrayFromFile("testArrays/counting10000asc.txt");
       break;
     case 5:
       cout << "Counting Sort - demo 10000 DESC" << endl;
-      rawArray = counting10000desc();
+      rawArray = arrayFromFile("testArrays/counting10000desc.txt");
       break;
     case 6:
       cout << "Counting Sort - demo 10000 random" << endl;
@@ -91,11 +91,11 @@ void runCountingSort(int demo = 0) {
       break;
     case 7:
       cout << "Counting Sort - demo 100000 ASC" << endl;
-      rawArray = counting100000asc();
+      rawArray = arrayFromFile("testArrays/counting100000asc.txt");
       break;
     case 8:
       cout << "Counting Sort - demo 100000 DESC" << endl;
-      rawArray = counting100000desc();
+      rawArray = arrayFromFile("testArrays/counting100000desc.txt");
       break;
     case 9:
       cout << "Counting Sort - demo 100000 random" << endl;
@@ -122,15 +122,6 @@ void runCountingSort(int demo = 0) {
   counting_exchange = 0;
 
   return;
-
-  //reverse
-  /* int revArr[n];
-  for (int i = 0; i < n; i++) {
-    revArr[i] = arr[n - 1 - i];
-  }
-  outputFile(revArr, n); */
-  //
-
 }
 
 #endif

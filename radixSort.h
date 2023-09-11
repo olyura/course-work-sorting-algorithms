@@ -53,7 +53,7 @@ void countingForRasixSort(int array[], int size, int place) {
     count[i] += count[i - 1];
   }
 
-   // Пошук індекса кожного елемента вхідного масива в масиві лічильників
+  // Пошук індекса кожного елемента вхідного масива в масиві лічильників
   // Розміщення елементів в вихідний масив, декремент лічильника
   for (int i = size - 1; i >= 0; i--) {
     output[count[(array[i] / place) % 10] - 1] = array[i];
@@ -85,11 +85,11 @@ void runRadixSort(int demo = 0) {
   switch(demo) {
     case 1:
       cout << "Radix Sort - demo 1000 ASC" << endl;
-      rawArray = radix1000asc();
+      rawArray = arrayFromFile("testArrays/radix1000asc.txt");
       break;
     case 2:
       cout << "Radix Sort - demo 1000 DESC" << endl;
-      rawArray = radix1000desc();
+      rawArray = arrayFromFile("testArrays/radix1000desc.txt");
       break;
     case 3:
       cout << "Radix Sort - demo 1000 random" << endl;
@@ -97,11 +97,11 @@ void runRadixSort(int demo = 0) {
       break;
     case 4:
       cout << "Radix Sort - demo 10000 ASC" << endl;
-      rawArray = radix10000asc();
+      rawArray = arrayFromFile("testArrays/radix10000asc.txt");
       break;
     case 5:
       cout << "Radix Sort - demo 10000 DESC" << endl;
-      rawArray = radix10000desc();
+      rawArray = arrayFromFile("testArrays/radix10000desc.txt");
       break;
     case 6:
       cout << "Radix Sort - demo 10000 random" << endl;
@@ -109,11 +109,11 @@ void runRadixSort(int demo = 0) {
       break;
     case 7:
       cout << "Radix Sort - demo 100000 ASC" << endl;
-      rawArray = radix100000asc();
+      rawArray = arrayFromFile("testArrays/radix100000asc.txt");
       break;
     case 8:
       cout << "Radix Sort - demo 100000 DESC" << endl;
-      rawArray = radix100000desc();
+      rawArray = arrayFromFile("testArrays/radix100000desc.txt");
       break;
     case 9:
       cout << "Radix Sort - demo 100000 random" << endl;
@@ -123,8 +123,6 @@ void runRadixSort(int demo = 0) {
       rawArray = handArray();
   }
 
-  //cout << rawArray << endl;
-  
   vector<int> futurArray = arrayFromInputInt(rawArray);
   int arr[futurArray.size()];
   for (int i=0; i < futurArray.size(); i++) { 
@@ -142,15 +140,6 @@ void runRadixSort(int demo = 0) {
   radix_exchange = 0;
 
   return;
-
-  //reverse
-  /* int revArr[n];
-  for (int i = 0; i < n; i++) {
-    revArr[i] = arr[n - 1 - i];
-  }
-  outputFile(revArr, n); */
-  //
-
 }
 
 #endif

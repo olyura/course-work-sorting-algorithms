@@ -23,8 +23,6 @@ struct Node {
 
 void bucketSort(int arr[], int size);
 struct Node *insertionSort(struct Node *list);
-/* void printOutput(int arr[], int size); */
-/* void printBuckets(struct Node *list); */
 int getBucketIndex(int value);
 
 // Алгоритм блочного сортування
@@ -51,26 +49,10 @@ void bucketSort(int arr[], int size) {
     bucket_exchange++;
   }
 
-  // Демонстрація комірок та їх вмісту, не обов'язково
-  /* for (i = 0; i < NBUCKET; i++) {
-    cout << "Bucket[" << i << "] : ";
-    printBuckets(buckets[i]);
-    cout << endl;
-  } */
-
   // Сортування елементів кожної комірки методом включення
   for (i = 0; i < NBUCKET; ++i) {
     buckets[i] = insertionSort(buckets[i]);
   }
-
-  // Демонстрація вмісту комірок після сортування, не обов'язково
-  /* cout << "-------------" << endl;
-  cout << "Buckets after sorting" << endl;
-  for (i = 0; i < NBUCKET; i++) {
-    cout << "Bucket[" << i << "] : ";
-    printBuckets(buckets[i]);
-    cout << endl;
-  } */
 
   // Перенос відсортованих елементів в основний масив
   for (j = 0, i = 0; i < NBUCKET; ++i) {
@@ -82,6 +64,7 @@ void bucketSort(int arr[], int size) {
     }
   }
 
+  // Очистка комірок
   for (i = 0; i < NBUCKET; ++i) {
     struct Node *node;
     node = buckets[i];
@@ -148,24 +131,6 @@ int getBucketIndex(int value) {
   return value / INTERVAL;
 }
 
-// Вивід відсортованих даних
-/* void printOutput(int ar[], int size) {
-  int i;
-  for (i = 0; i < size; ++i) {
-    printf("%d ", ar[i]);
-  }
-  cout << endl;
-} */
-
-// Перебор вмісту комірки
-/* void printBuckets(struct Node *list) {
-  struct Node *cur = list;
-  while (cur) {
-    cout << setw(3) << cur->data;
-    cur = cur->next;
-  }
-} */
-
 // Запуск функції сортування підрахунком
 void runBucketSort(int demo = 0) {
 
@@ -174,11 +139,11 @@ void runBucketSort(int demo = 0) {
   switch(demo) {
     case 1:
       cout << "Bucket Sort - demo 1000 ASC" << endl;
-      rawArray = bucket1000asc();
+      rawArray = arrayFromFile("testArrays/bucket1000asc.txt");
       break;
     case 2:
       cout << "Bucket Sort - demo 1000 DESC" << endl;
-      rawArray = bucket1000desc();
+      rawArray = arrayFromFile("testArrays/bucket1000desc.txt");
       break;
     case 3:
       cout << "Bucket Sort - demo 1000 random" << endl;
@@ -186,11 +151,11 @@ void runBucketSort(int demo = 0) {
       break;
     case 4:
       cout << "Bucket Sort - demo 10000 ASC" << endl;
-      rawArray = bucket10000asc();
+      rawArray = arrayFromFile("testArrays/bucket10000asc.txt");
       break;
     case 5:
       cout << "Bucket Sort - demo 10000 DESC" << endl;
-      rawArray = bucket10000desc();
+      rawArray = arrayFromFile("testArrays/bucket10000desc.txt");
       break;
     case 6:
       cout << "Bucket Sort - demo 10000 random" << endl;
@@ -198,11 +163,11 @@ void runBucketSort(int demo = 0) {
       break;
     case 7:
       cout << "Bucket Sort - demo 100000 ASC" << endl;
-      rawArray = bucket100000asc();
+      rawArray = arrayFromFile("testArrays/bucket100000asc.txt");
       break;
     case 8:
       cout << "Bucket Sort - demo 100000 DESC" << endl;
-      rawArray = bucket100000desc();
+      rawArray = arrayFromFile("testArrays/bucket100000desc.txt");
       break;
     case 9:
       cout << "Bucket Sort - demo 100000 random" << endl;
@@ -229,15 +194,6 @@ void runBucketSort(int demo = 0) {
   bucket_exchange = 0;
 
   return;
-
-  //reverse
-  /* int revArr[n];
-  for (int i = 0; i < n; i++) {
-    revArr[i] = arr[n - 1 - i];
-  }
-  outputFile(revArr, n) */;
-  //
-
 }
 
 #endif
