@@ -1,4 +1,4 @@
-// Сортування підрахунком мовою C++
+// Алгоритми сортування мовою C++
 #include <iostream>
 #include <conio.h> // getch
 
@@ -19,7 +19,7 @@ void menu(int level, int algorithm) {
   // Головний рівень
   if (level==0) {
     cout << "--- MAIN MENU ---" << endl;
-    cout << "Hello and welcome to a simple algorithm sorting programm. Choose your algorithm by entering it's number: " << endl;
+    cout << "Hello and welcome to a simple algorithm sorting programm. Choose your algorithm by entering its number: " << endl;
     cout << "1. Counting sort " << endl;
     cout << "2. Radix sort" << endl;
     cout << "3. Bucket sort" << endl;

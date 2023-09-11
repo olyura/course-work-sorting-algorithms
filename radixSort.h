@@ -123,10 +123,10 @@ void runRadixSort(int demo = 0) {
       rawArray = handArray();
   }
 
-  vector<int> futurArray = arrayFromInputInt(rawArray);
-  int arr[futurArray.size()];
-  for (int i=0; i < futurArray.size(); i++) { 
-    arr[i] = futurArray[i];
+  vector<int> futureArray = arrayFromInputInt(rawArray);
+  int arr[futureArray.size()];
+  for (int i=0; i < futureArray.size(); i++) { 
+    arr[i] = futureArray[i];
   }
   int n = sizeof(arr) / sizeof(arr[0]);
 
